@@ -115,8 +115,8 @@ class ManagerServiceImpl : ManagerService {
 						try {
 							val roleId = arguments[0].toLong()
 
-							guildData.managerRoleIds.removeIf {
-								it == roleId
+							if (!guildData.managerRoleIds.removeIf { it == roleId }) {
+								throw Exception()
 							}
 
 							EmbedBuilder().success(
@@ -199,7 +199,9 @@ class ManagerServiceImpl : ManagerService {
 						try {
 							val channelId = arguments[0].toLong()
 
-							guildData.monitoredChannelIds.removeIf { it == channelId }
+							if (!guildData.monitoredChannelIds.removeIf { it == channelId }) {
+								throw Exception()
+							}
 
 							EmbedBuilder().success(
 								event.member,
