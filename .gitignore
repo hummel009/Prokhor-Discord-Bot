@@ -1,0 +1,13 @@
+### Gradle ###
+/.gradle/
+/**/build/
+
+### IntelliJ IDEA ###
+/.idea/
+
+### Kotlin ###
+/.kotlin/
+
+### Project ###
+/files/
+config.json
