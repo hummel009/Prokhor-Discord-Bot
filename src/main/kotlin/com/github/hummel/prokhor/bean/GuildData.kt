@@ -5,5 +5,6 @@ data class GuildData(
 	val guildName: String,
 	var lang: String,
 	val managerRoleIds: MutableSet<Long>,
+	var monitoringChannelId: Long,
 	var monitoredChannelIds: MutableSet<Long>
 )

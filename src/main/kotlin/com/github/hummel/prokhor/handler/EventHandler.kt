@@ -19,6 +19,7 @@ object EventHandler : ListenerAdapter() {
 		managerService.clearManagerRoles(event)
 
 		managerService.setLanguage(event)
+		managerService.setMonitoringChannel(event)
 
 		managerService.addMonitoredChannel(event)
 		managerService.clearMonitoredChannels(event)

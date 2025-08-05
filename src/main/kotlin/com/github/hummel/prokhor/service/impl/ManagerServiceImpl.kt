@@ -28,11 +28,12 @@ class ManagerServiceImpl : ManagerService {
 				EmbedBuilder().access(event.member, guildData, I18n.of("msg_access", guildData))
 			} else {
 				val arguments = event.getOption("arguments")?.asString?.split(" ") ?: emptyList()
+
 				if (arguments.size == 1) {
 					try {
 						val lang = arguments[0]
 
-						if (lang != "ru" && lang != "be" && lang != "uk" && lang != "en") {
+						if (lang !in listOf("ru", "be", "uk", "en")) {
 							throw Exception()
 						}
 
@@ -42,6 +43,48 @@ class ManagerServiceImpl : ManagerService {
 
 						EmbedBuilder().success(
 							event.member, guildData, I18n.of("set_language", guildData).format(langName)
+						)
+					} catch (_: Exception) {
+						EmbedBuilder().error(event.member, guildData, I18n.of("msg_error_format", guildData))
+					}
+				} else {
+					EmbedBuilder().error(event.member, guildData, I18n.of("msg_error_arg", guildData))
+				}
+			}
+			dataService.saveGuildData(guild, guildData)
+
+			event.hook.sendMessageEmbeds(embed).queue()
+		}
+	}
+
+	override fun setMonitoringChannel(event: SlashCommandInteractionEvent) {
+		if (event.fullCommandName != "set_monitoring_channel") {
+			return
+		}
+
+		event.deferReply().queue {
+			val guild = event.guild ?: return@queue
+			val guildData = dataService.loadGuildData(guild)
+
+			val embed = if (!accessService.fromManagerAtLeast(event, guildData)) {
+				EmbedBuilder().access(event.member, guildData, I18n.of("msg_access", guildData))
+			} else {
+				val arguments = event.getOption("arguments")?.asString?.split(" ") ?: emptyList()
+
+				if (arguments.size == 1) {
+					try {
+						val channelId = arguments[0].toLong()
+
+						guild.getTextChannelById(
+							channelId
+						) ?: guild.getThreadChannelById(
+							channelId
+						) ?: throw Exception()
+
+						guildData.monitoringChannelId = channelId
+
+						EmbedBuilder().success(
+							event.member, guildData, I18n.of("set_monitoring_channel", guildData).format(channelId)
 						)
 					} catch (_: Exception) {
 						EmbedBuilder().error(event.member, guildData, I18n.of("msg_error_format", guildData))
@@ -69,6 +112,7 @@ class ManagerServiceImpl : ManagerService {
 				EmbedBuilder().access(event.member, guildData, I18n.of("msg_access", guildData))
 			} else {
 				val arguments = event.getOption("arguments")?.asString?.split(" ") ?: emptyList()
+
 				if (arguments.size == 1) {
 					try {
 						val roleId = arguments[0].toLong()
@@ -106,6 +150,7 @@ class ManagerServiceImpl : ManagerService {
 				EmbedBuilder().access(event.member, guildData, I18n.of("msg_access", guildData))
 			} else {
 				val arguments = event.getOption("arguments")?.asString?.split(" ") ?: emptyList()
+
 				if (arguments.isEmpty()) {
 					guildData.managerRoleIds.clear()
 
@@ -149,6 +194,7 @@ class ManagerServiceImpl : ManagerService {
 				EmbedBuilder().access(event.member, guildData, I18n.of("msg_access", guildData))
 			} else {
 				val arguments = event.getOption("arguments")?.asString?.split(" ") ?: emptyList()
+
 				if (arguments.size == 1) {
 					try {
 						val channelId = arguments[0].toLong()
@@ -190,6 +236,7 @@ class ManagerServiceImpl : ManagerService {
 				EmbedBuilder().access(event.member, guildData, I18n.of("msg_access", guildData))
 			} else {
 				val arguments = event.getOption("arguments")?.asString?.split(" ") ?: emptyList()
+
 				if (arguments.isEmpty()) {
 					guildData.monitoredChannelIds.clear()
 
