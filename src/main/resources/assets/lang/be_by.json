@@ -22,6 +22,8 @@
 	"title_success": "Поспех",
 	"title_access": "Доступ",
 	"title_error": "Памылка",
+	"title_edited": "Адрэдагавана",
+	"title_deleted": "Выдалена",
 	"msg_access": "Вы не можаце выкарыстоўваць гэтую каманду.",
 	"msg_error_arg": "Недапушчальныя аргументы.",
 	"msg_error_format": "Недапушчальны фармат аргументаў.",

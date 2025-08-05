@@ -22,6 +22,8 @@
 	"title_success": "Success",
 	"title_access": "Access",
 	"title_error": "Error",
+	"title_edited": "Edited",
+	"title_deleted": "Deleted",
 	"msg_access": "You cannot use this command.",
 	"msg_error_arg": "Invalid arguments.",
 	"msg_error_format": "Invalid arguments format.",

@@ -22,6 +22,8 @@
 	"title_success": "Успіх",
 	"title_access": "Доступ",
 	"title_error": "Помилка",
+	"title_edited": "Відредагувано",
+	"title_deleted": "Відалено",
 	"msg_access": "Ви не можете використовувати цю команду.",
 	"msg_error_arg": "Неприпустимі аргументи.",
 	"msg_error_format": "Неприпустимий формат аргументів.",

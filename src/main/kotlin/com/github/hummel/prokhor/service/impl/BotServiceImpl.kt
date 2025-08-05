@@ -50,7 +50,6 @@ class BotServiceImpl : BotService {
 			guildData.logChannelId
 		) ?: throw Exception()
 
-		val author = event.message.author
 		val message = event.message.contentRaw
 
 		val messageId = event.message.idLong
@@ -60,7 +59,6 @@ class BotServiceImpl : BotService {
 		val messageArchived = channelArchived[messageId]?.decode() ?: return
 
 		logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
-			setAuthor(author.effectiveName, null, author.effectiveAvatarUrl)
 			setTitle(I18n.of("title_edited", guildData))
 			setDescription(messageArchived + "\r\n\r\n" + message)
 			setColor(0xFFFF00)
