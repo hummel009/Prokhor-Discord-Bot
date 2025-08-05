@@ -57,48 +57,6 @@ class ManagerServiceImpl : ManagerService {
 		}
 	}
 
-	override fun setMonitoringChannel(event: SlashCommandInteractionEvent) {
-		if (event.fullCommandName != "set_monitoring_channel") {
-			return
-		}
-
-		event.deferReply().queue {
-			val guild = event.guild ?: return@queue
-			val guildData = dataService.loadGuildData(guild)
-
-			val embed = if (!accessService.fromManagerAtLeast(event, guildData)) {
-				EmbedBuilder().access(event.member, guildData, I18n.of("msg_access", guildData))
-			} else {
-				val arguments = event.getOption("arguments")?.asString?.split(" ") ?: emptyList()
-
-				if (arguments.size == 1) {
-					try {
-						val channelId = arguments[0].toLong()
-
-						guild.getTextChannelById(
-							channelId
-						) ?: guild.getThreadChannelById(
-							channelId
-						) ?: throw Exception()
-
-						guildData.monitoringChannelId = channelId
-
-						EmbedBuilder().success(
-							event.member, guildData, I18n.of("set_monitoring_channel", guildData).format(channelId)
-						)
-					} catch (_: Exception) {
-						EmbedBuilder().error(event.member, guildData, I18n.of("msg_error_format", guildData))
-					}
-				} else {
-					EmbedBuilder().error(event.member, guildData, I18n.of("msg_error_arg", guildData))
-				}
-			}
-			dataService.saveGuildData(guild, guildData)
-
-			event.hook.sendMessageEmbeds(embed).queue()
-		}
-	}
-
 	override fun addManagerRole(event: SlashCommandInteractionEvent) {
 		if (event.fullCommandName != "add_manager_role") {
 			return
@@ -261,6 +219,48 @@ class ManagerServiceImpl : ManagerService {
 					} else {
 						EmbedBuilder().error(event.member, guildData, I18n.of("msg_error_arg", guildData))
 					}
+				}
+			}
+			dataService.saveGuildData(guild, guildData)
+
+			event.hook.sendMessageEmbeds(embed).queue()
+		}
+	}
+
+	override fun setMonitoringChannel(event: SlashCommandInteractionEvent) {
+		if (event.fullCommandName != "set_monitoring_channel") {
+			return
+		}
+
+		event.deferReply().queue {
+			val guild = event.guild ?: return@queue
+			val guildData = dataService.loadGuildData(guild)
+
+			val embed = if (!accessService.fromManagerAtLeast(event, guildData)) {
+				EmbedBuilder().access(event.member, guildData, I18n.of("msg_access", guildData))
+			} else {
+				val arguments = event.getOption("arguments")?.asString?.split(" ") ?: emptyList()
+
+				if (arguments.size == 1) {
+					try {
+						val channelId = arguments[0].toLong()
+
+						guild.getTextChannelById(
+							channelId
+						) ?: guild.getThreadChannelById(
+							channelId
+						) ?: throw Exception()
+
+						guildData.monitoringChannelId = channelId
+
+						EmbedBuilder().success(
+							event.member, guildData, I18n.of("set_monitoring_channel", guildData).format(channelId)
+						)
+					} catch (_: Exception) {
+						EmbedBuilder().error(event.member, guildData, I18n.of("msg_error_format", guildData))
+					}
+				} else {
+					EmbedBuilder().error(event.member, guildData, I18n.of("msg_error_arg", guildData))
 				}
 			}
 			dataService.saveGuildData(guild, guildData)
