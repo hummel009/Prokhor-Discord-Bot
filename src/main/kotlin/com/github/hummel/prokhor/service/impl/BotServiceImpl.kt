@@ -33,7 +33,7 @@ class BotServiceImpl : BotService {
 
 		val innerMap = guildBank.channelsToBanks.getOrPut(channelId) { linkedMapOf() }
 		innerMap[event.message.idLong] = message.encode()
-		if (innerMap.size > 100) {
+		if (innerMap.size > 1000) {
 			innerMap.remove(innerMap.keys.first())
 		}
 
