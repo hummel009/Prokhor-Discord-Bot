@@ -12,8 +12,7 @@
 My discord bot for my discord servers. His name is Прохор (Prokhor). Key features:
 
 * Four languages of interface: english, russian, belarusian and ukrainian.
-* Connecting one discord channel with one telegram chat. Bot will be transferring all messages from first to second and
-  vice versa.
+* Logging all message deletions and editions (channels can be excluded), also reporting user joining and leaving.
 * Adding bot manager roles to allow not only admins change upper settings.
 * Server data can be deleted by admins and manager roles, if you are concerned about your privacy.
 
