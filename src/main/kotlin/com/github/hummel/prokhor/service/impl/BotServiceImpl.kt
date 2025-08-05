@@ -74,7 +74,7 @@ class BotServiceImpl : BotService {
 
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
 				setTitle(I18n.of("title_msg_edited", guildData))
-				setDescription("> $messageArchived\r\n\r\n> $message")
+				setDescription("${qep(messageArchived)}\r\n\r\n${qep(message)}")
 				setColor(0xFFFF00)
 			}.build()).queue()
 
@@ -155,4 +155,6 @@ class BotServiceImpl : BotService {
 		} catch (_: Exception) {
 		}
 	}
+
+	private fun qep(text: String): String = text.lines().joinToString("\n") { "> $it" }
 }
