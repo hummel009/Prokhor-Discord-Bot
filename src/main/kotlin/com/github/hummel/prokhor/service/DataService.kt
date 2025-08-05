@@ -12,6 +12,7 @@ interface DataService {
 	fun saveGuildBank(guild: Guild, guildBank: GuildBank)
 
 	fun wipeGuildData(guild: Guild)
+	fun wipeGuildBank(guild: Guild)
 
 	fun exportBotData(): ByteArray
 	fun importBotData(byteArray: ByteArray)

@@ -50,6 +50,14 @@ class DataServiceImpl : DataService {
 		fileDao.createEmptyFile(filePath)
 	}
 
+	override fun wipeGuildBank(guild: Guild) {
+		val folderName = guild.id
+		val filePath = "guilds/$folderName/bank.json"
+
+		fileDao.removeFile(filePath)
+		fileDao.createEmptyFile(filePath)
+	}
+
 	override fun importBotData(byteArray: ByteArray) {
 		val targetFolderPath = "guilds"
 		val importFolderPath = "import"

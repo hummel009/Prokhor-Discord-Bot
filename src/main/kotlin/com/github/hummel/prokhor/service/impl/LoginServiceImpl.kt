@@ -47,6 +47,7 @@ class LoginServiceImpl : LoginService {
 			"uncommit".cmd("/uncommit", string(false)),
 
 			"wipe_data".cmd("/wipe_data", empty()),
+			"wipe_bank".cmd("/wipe_bank", empty()),
 
 			"import".cmd("/import", attachment()),
 			"export".cmd("/export", empty()),

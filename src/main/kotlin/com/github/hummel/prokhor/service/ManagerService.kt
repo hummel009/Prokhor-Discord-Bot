@@ -10,4 +10,5 @@ interface ManagerService {
 	fun clearExcludedChannels(event: SlashCommandInteractionEvent)
 	fun setLogChannel(event: SlashCommandInteractionEvent)
 	fun wipeData(event: SlashCommandInteractionEvent)
+	fun wipeBank(event: SlashCommandInteractionEvent)
 }

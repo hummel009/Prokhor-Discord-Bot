@@ -288,4 +288,24 @@ class ManagerServiceImpl : ManagerService {
 			event.hook.sendMessageEmbeds(embed).queue()
 		}
 	}
+
+	override fun wipeBank(event: SlashCommandInteractionEvent) {
+		if (event.fullCommandName != "wipe_bank") {
+			return
+		}
+
+		event.deferReply().queue {
+			val guild = event.guild ?: return@queue
+			val guildData = dataService.loadGuildData(guild)
+
+			val embed = if (!accessService.fromManagerAtLeast(event, guildData)) {
+				EmbedBuilder().access(event.member, guildData, I18n.of("msg_access", guildData))
+			} else {
+				dataService.wipeGuildBank(guild)
+
+				EmbedBuilder().success(event.member, guildData, I18n.of("wipe_bank", guildData))
+			}
+			event.hook.sendMessageEmbeds(embed).queue()
+		}
+	}
 }

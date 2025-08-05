@@ -16,6 +16,7 @@
 	"set_language": "Language has been set: %s.",
 	"set_log_channel": "Log channel has been set: <#%d>.",
 	"wipe_data": "Server data has been cleared.",
+	"wipe_bank": "Server logbank has been cleared.",
 	"import": "Bot data has been imported.",
 	"exit": "Application will be turned off.",
 	"title_success": "Success",
