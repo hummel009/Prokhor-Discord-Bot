@@ -30,16 +30,16 @@ class DataServiceImpl : DataService {
 
 	override fun loadGuildBank(guild: Guild): GuildBank {
 		val folderName = guild.id
-		val filePath = "guilds/$folderName/data.json"
+		val filePath = "guilds/$folderName/bank.json"
 
-		return jsonDao.readFromFile(filePath, GuildBank::class.java) ?: initAndGetGuildBank()
+		return jsonDao.readFromFile(filePath, GuildBank::class.java) ?: initAndGetGuildBank(guild)
 	}
 
 	override fun saveGuildBank(guild: Guild, guildBank: GuildBank) {
 		val folderName = guild.id
-		val filePath = "guilds/$folderName/data.json"
+		val filePath = "guilds/$folderName/bank.json"
 
-		jsonDao.writeToFile(filePath, guildData)
+		jsonDao.writeToFile(filePath, guildBank)
 	}
 
 	override fun wipeGuildData(guild: Guild) {
@@ -92,5 +92,8 @@ class DataServiceImpl : DataService {
 		excludedChannelIds = mutableSetOf(),
 	)
 
-	private fun initAndGetGuildBank(): GuildBank = GuildBank(mutableMapOf())
+	private fun initAndGetGuildBank(guild: Guild): GuildBank = GuildBank(
+		guild.name,
+		mutableMapOf()
+	)
 }
