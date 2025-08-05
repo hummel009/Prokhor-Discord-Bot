@@ -31,7 +31,7 @@ class MemberServiceImpl : MemberService {
 			val text = buildString {
 				val langName = I18n.of(guildData.lang, guildData)
 				append(I18n.of("info_language", guildData).format(langName), "\r\n")
-				append(I18n.of("info_monitoring_channel", guildData).format(guildData.monitoringChannelId), "\r\n")
+				append(I18n.of("info_log_channel", guildData).format(guildData.logChannelId), "\r\n")
 
 				if (guildData.managerRoleIds.isEmpty()) {
 					append("\r\n", I18n.of("no_manager_roles", guildData), "\r\n")

@@ -81,9 +81,9 @@ class DataServiceImpl : DataService {
 			guildId = guild.idLong,
 			guildName = guild.name,
 			lang = "ru",
+			logChannelId = 0,
 			managerRoleIds = mutableSetOf(),
 			excludedChannelIds = mutableSetOf(),
-			monitoringChannelId = 0,
 		)
 
 		jsonDao.writeToFile(dataPath, guildData)

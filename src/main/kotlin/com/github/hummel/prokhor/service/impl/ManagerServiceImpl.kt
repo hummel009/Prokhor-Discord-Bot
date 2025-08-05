@@ -227,8 +227,8 @@ class ManagerServiceImpl : ManagerService {
 		}
 	}
 
-	override fun setMonitoringChannel(event: SlashCommandInteractionEvent) {
-		if (event.fullCommandName != "set_monitoring_channel") {
+	override fun setLogChannel(event: SlashCommandInteractionEvent) {
+		if (event.fullCommandName != "set_log_channel") {
 			return
 		}
 
@@ -251,10 +251,10 @@ class ManagerServiceImpl : ManagerService {
 							channelId
 						) ?: throw Exception()
 
-						guildData.monitoringChannelId = channelId
+						guildData.logChannelId = channelId
 
 						EmbedBuilder().success(
-							event.member, guildData, I18n.of("set_monitoring_channel", guildData).format(channelId)
+							event.member, guildData, I18n.of("set_log_channel", guildData).format(channelId)
 						)
 					} catch (_: Exception) {
 						EmbedBuilder().error(event.member, guildData, I18n.of("msg_error_format", guildData))

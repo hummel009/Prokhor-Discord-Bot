@@ -35,7 +35,7 @@ class LoginServiceImpl : LoginService {
 			"info".cmd("/info", empty()),
 
 			"set_language".cmd("/set_language [ru/be/uk/en]", string()),
-			"set_monitoring_channel".cmd("/set_monitoring_channel [channel_id]", string()),
+			"set_log_channel".cmd("/set_log_channel [channel_id]", string()),
 
 			"add_manager_role".cmd("/add_manager_role [role_id]", string()),
 			"clear_manager_roles".cmd("/clear_manager_roles {role_id}", string(false)),
