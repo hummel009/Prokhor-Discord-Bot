@@ -62,6 +62,14 @@ class BotServiceImpl : BotService {
 			val channelArchived = guildBank.channelsToBanks[event.channel.idLong] ?: return
 			val messageArchived = channelArchived[messageId]?.decode() ?: return
 
+			if (message == messageArchived || message.trim() == messageArchived.trim()) {
+				return
+			}
+
+			if (message.isEmpty() || messageArchived.isEmpty()) {
+				return
+			}
+
 			(guildBank.channelsToBanks[event.channel.idLong] ?: return)[messageId] = message.encode()
 
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
