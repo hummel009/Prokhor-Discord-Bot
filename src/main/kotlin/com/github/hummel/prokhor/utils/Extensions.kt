@@ -6,13 +6,13 @@ import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.MessageEmbed
 import java.util.*
 
-fun EmbedBuilder.error(member: Member?, guildData: GuildData, desc: String): MessageEmbed = apply {
+fun EmbedBuilder.success(member: Member?, guildData: GuildData, desc: String): MessageEmbed = apply {
 	member ?: return@apply
 
 	setAuthor(member.effectiveName, null, member.effectiveAvatarUrl)
-	setTitle(I18n.of("title_error", guildData))
+	setTitle(I18n.of("title_success", guildData))
 	setDescription(desc)
-	setColor(0xFF0000)
+	setColor(0x00FF00)
 }.build()
 
 fun EmbedBuilder.access(member: Member?, guildData: GuildData, desc: String): MessageEmbed = apply {
@@ -24,13 +24,13 @@ fun EmbedBuilder.access(member: Member?, guildData: GuildData, desc: String): Me
 	setColor(0xFFFF00)
 }.build()
 
-fun EmbedBuilder.success(member: Member?, guildData: GuildData, desc: String): MessageEmbed = apply {
+fun EmbedBuilder.error(member: Member?, guildData: GuildData, desc: String): MessageEmbed = apply {
 	member ?: return@apply
 
 	setAuthor(member.effectiveName, null, member.effectiveAvatarUrl)
-	setTitle(I18n.of("title_success", guildData))
+	setTitle(I18n.of("title_error", guildData))
 	setDescription(desc)
-	setColor(0x00FF00)
+	setColor(0xFF0000)
 }.build()
 
 fun String.encode(): String {

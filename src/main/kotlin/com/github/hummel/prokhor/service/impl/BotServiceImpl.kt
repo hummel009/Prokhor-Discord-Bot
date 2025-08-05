@@ -3,8 +3,10 @@ package com.github.hummel.prokhor.service.impl
 import com.github.hummel.prokhor.factory.ServiceFactory
 import com.github.hummel.prokhor.service.BotService
 import com.github.hummel.prokhor.service.DataService
+import com.github.hummel.prokhor.utils.I18n
 import com.github.hummel.prokhor.utils.decode
 import com.github.hummel.prokhor.utils.encode
+import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent
@@ -57,8 +59,12 @@ class BotServiceImpl : BotService {
 		val channelArchived = guildBank.channelsToBanks[event.channel.idLong] ?: return
 		val messageArchived = channelArchived[messageId]?.decode() ?: return
 
-		logsChannel.sendMessage("Before: $messageArchived").queue()
-		logsChannel.sendMessage("After: $message").queue()
+		logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
+			setAuthor(author.effectiveName, null, author.effectiveAvatarUrl)
+			setTitle(I18n.of("title_edited", guildData))
+			setDescription(messageArchived + "\r\n\r\n" + message)
+			setColor(0xFFFF00)
+		}.build()).queue()
 	}
 
 	override fun reportDeleted(event: MessageDeleteEvent) {
@@ -80,7 +86,10 @@ class BotServiceImpl : BotService {
 		val channelArchived = guildBank.channelsToBanks[event.channel.idLong] ?: return
 		val messageArchived = channelArchived[messageId]?.decode() ?: return
 
-		logsChannel.sendMessage("Existed: $messageArchived").queue()
-		logsChannel.sendMessage("Removed").queue()
+		logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
+			setTitle(I18n.of("title_deleted", guildData))
+			setDescription(messageArchived)
+			setColor(0xFF0000)
+		}.build()).queue()
 	}
 }
