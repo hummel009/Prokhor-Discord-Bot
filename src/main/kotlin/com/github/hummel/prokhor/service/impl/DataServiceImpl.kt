@@ -1,5 +1,6 @@
 package com.github.hummel.prokhor.service.impl
 
+import com.github.hummel.prokhor.bean.GuildBank
 import com.github.hummel.prokhor.bean.GuildData
 import com.github.hummel.prokhor.dao.FileDao
 import com.github.hummel.prokhor.dao.JsonDao
@@ -17,10 +18,24 @@ class DataServiceImpl : DataService {
 		val folderName = guild.id
 		val filePath = "guilds/$folderName/data.json"
 
-		return jsonDao.readFromFile(filePath, GuildData::class.java) ?: initAndGet(guild)
+		return jsonDao.readFromFile(filePath, GuildData::class.java) ?: initAndGetGuildData(guild)
 	}
 
 	override fun saveGuildData(guild: Guild, guildData: GuildData) {
+		val folderName = guild.id
+		val filePath = "guilds/$folderName/data.json"
+
+		jsonDao.writeToFile(filePath, guildData)
+	}
+
+	override fun loadGuildBank(guild: Guild): GuildBank {
+		val folderName = guild.id
+		val filePath = "guilds/$folderName/data.json"
+
+		return jsonDao.readFromFile(filePath, GuildBank::class.java) ?: initAndGetGuildBank()
+	}
+
+	override fun saveGuildBank(guild: Guild, guildBank: GuildBank) {
 		val folderName = guild.id
 		val filePath = "guilds/$folderName/data.json"
 
@@ -69,25 +84,13 @@ class DataServiceImpl : DataService {
 		return file
 	}
 
-	private fun initAndGet(guild: Guild): GuildData {
-		val folderName = guild.id
-		val serverPath = "guilds/$folderName"
-		val dataPath = "guilds/$folderName/data.json"
+	private fun initAndGetGuildData(guild: Guild): GuildData = GuildData(
+		guildName = guild.name,
+		lang = "ru",
+		logChannelId = 0,
+		managerRoleIds = mutableSetOf(),
+		excludedChannelIds = mutableSetOf(),
+	)
 
-		fileDao.createEmptyFolder(serverPath)
-		fileDao.createEmptyFile(dataPath)
-
-		val guildData = GuildData(
-			guildId = guild.idLong,
-			guildName = guild.name,
-			lang = "ru",
-			logChannelId = 0,
-			managerRoleIds = mutableSetOf(),
-			excludedChannelIds = mutableSetOf(),
-		)
-
-		jsonDao.writeToFile(dataPath, guildData)
-
-		return guildData
-	}
+	private fun initAndGetGuildBank(): GuildBank = GuildBank(mutableMapOf())
 }
