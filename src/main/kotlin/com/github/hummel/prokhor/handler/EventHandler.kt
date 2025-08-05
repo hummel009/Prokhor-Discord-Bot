@@ -5,6 +5,8 @@ import com.github.hummel.prokhor.service.BotService
 import com.github.hummel.prokhor.service.ManagerService
 import com.github.hummel.prokhor.service.MemberService
 import com.github.hummel.prokhor.service.OwnerService
+import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
@@ -42,10 +44,18 @@ object EventHandler : ListenerAdapter() {
 	}
 
 	override fun onMessageUpdate(event: MessageUpdateEvent) {
-		botService.reportEdited(event)
+		botService.reportMessageEdited(event)
 	}
 
 	override fun onMessageDelete(event: MessageDeleteEvent) {
-		botService.reportDeleted(event)
+		botService.reportMessageDeleted(event)
+	}
+
+	override fun onGuildMemberJoin(event: GuildMemberJoinEvent) {
+		botService.reportUserJoined(event)
+	}
+
+	override fun onGuildMemberRemove(event: GuildMemberRemoveEvent) {
+		botService.reportUserLeft(event)
 	}
 }
