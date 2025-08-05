@@ -82,7 +82,7 @@ class DataServiceImpl : DataService {
 			guildName = guild.name,
 			lang = "ru",
 			managerRoleIds = mutableSetOf(),
-			monitoredChannelIds = mutableSetOf(),
+			excludedChannelIds = mutableSetOf(),
 			monitoringChannelId = 0,
 		)
 

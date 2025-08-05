@@ -6,5 +6,5 @@ data class GuildData(
 	var lang: String,
 	val managerRoleIds: MutableSet<Long>,
 	var monitoringChannelId: Long,
-	var monitoredChannelIds: MutableSet<Long>
+	var excludedChannelIds: MutableSet<Long>
 )

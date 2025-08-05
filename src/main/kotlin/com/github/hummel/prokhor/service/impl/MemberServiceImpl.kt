@@ -24,7 +24,7 @@ class MemberServiceImpl : MemberService {
 				guild.getRoleById(it) == null
 			}
 
-			guildData.monitoredChannelIds.removeIf {
+			guildData.excludedChannelIds.removeIf {
 				guild.getTextChannelById(it) == null && guild.getThreadChannelById(it) == null
 			}
 
@@ -43,12 +43,12 @@ class MemberServiceImpl : MemberService {
 					append("\r\n")
 				}
 
-				if (guildData.monitoredChannelIds.isEmpty()) {
-					append("\r\n", I18n.of("no_monitored_channels", guildData), "\r\n")
+				if (guildData.excludedChannelIds.isEmpty()) {
+					append("\r\n", I18n.of("no_excluded_channels", guildData), "\r\n")
 				} else {
-					append("\r\n", I18n.of("has_monitored_channels", guildData), "\r\n")
-					guildData.monitoredChannelIds.joinTo(this, "\r\n") {
-						I18n.of("monitored_channel", guildData).format(it)
+					append("\r\n", I18n.of("has_excluded_channels", guildData), "\r\n")
+					guildData.excludedChannelIds.joinTo(this, "\r\n") {
+						I18n.of("excluded_channel", guildData).format(it)
 					}
 					append("\r\n")
 				}

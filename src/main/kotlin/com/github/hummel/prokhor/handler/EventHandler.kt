@@ -21,8 +21,8 @@ object EventHandler : ListenerAdapter() {
 		managerService.setLanguage(event)
 		managerService.setMonitoringChannel(event)
 
-		managerService.addMonitoredChannel(event)
-		managerService.clearMonitoredChannels(event)
+		managerService.addExcludedChannel(event)
+		managerService.clearExcludedChannels(event)
 
 		managerService.wipeData(event)
 

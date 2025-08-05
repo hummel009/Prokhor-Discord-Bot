@@ -6,8 +6,8 @@ interface ManagerService {
 	fun setLanguage(event: SlashCommandInteractionEvent)
 	fun addManagerRole(event: SlashCommandInteractionEvent)
 	fun clearManagerRoles(event: SlashCommandInteractionEvent)
-	fun addMonitoredChannel(event: SlashCommandInteractionEvent)
-	fun clearMonitoredChannels(event: SlashCommandInteractionEvent)
+	fun addExcludedChannel(event: SlashCommandInteractionEvent)
+	fun clearExcludedChannels(event: SlashCommandInteractionEvent)
 	fun setMonitoringChannel(event: SlashCommandInteractionEvent)
 	fun wipeData(event: SlashCommandInteractionEvent)
 }

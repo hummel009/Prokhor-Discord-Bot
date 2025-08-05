@@ -139,8 +139,8 @@ class ManagerServiceImpl : ManagerService {
 		}
 	}
 
-	override fun addMonitoredChannel(event: SlashCommandInteractionEvent) {
-		if (event.fullCommandName != "add_monitored_channel") {
+	override fun addExcludedChannel(event: SlashCommandInteractionEvent) {
+		if (event.fullCommandName != "add_excluded_channel") {
 			return
 		}
 
@@ -163,10 +163,10 @@ class ManagerServiceImpl : ManagerService {
 							channelId
 						) ?: throw Exception()
 
-						guildData.monitoredChannelIds.add(channelId)
+						guildData.excludedChannelIds.add(channelId)
 
 						EmbedBuilder().success(
-							event.member, guildData, I18n.of("add_monitored_channel", guildData).format(channelId)
+							event.member, guildData, I18n.of("add_excluded_channel", guildData).format(channelId)
 						)
 					} catch (_: Exception) {
 						EmbedBuilder().error(event.member, guildData, I18n.of("msg_error_format", guildData))
@@ -181,8 +181,8 @@ class ManagerServiceImpl : ManagerService {
 		}
 	}
 
-	override fun clearMonitoredChannels(event: SlashCommandInteractionEvent) {
-		if (event.fullCommandName != "clear_monitored_channels") {
+	override fun clearExcludedChannels(event: SlashCommandInteractionEvent) {
+		if (event.fullCommandName != "clear_excluded_channels") {
 			return
 		}
 
@@ -196,22 +196,22 @@ class ManagerServiceImpl : ManagerService {
 				val arguments = event.getOption("arguments")?.asString?.split(" ") ?: emptyList()
 
 				if (arguments.isEmpty()) {
-					guildData.monitoredChannelIds.clear()
+					guildData.excludedChannelIds.clear()
 
-					EmbedBuilder().success(event.member, guildData, I18n.of("clear_monitored_channels", guildData))
+					EmbedBuilder().success(event.member, guildData, I18n.of("clear_excluded_channels", guildData))
 				} else {
 					if (arguments.size == 1) {
 						try {
 							val channelId = arguments[0].toLong()
 
-							if (!guildData.monitoredChannelIds.removeIf { it == channelId }) {
+							if (!guildData.excludedChannelIds.removeIf { it == channelId }) {
 								throw Exception()
 							}
 
 							EmbedBuilder().success(
 								event.member,
 								guildData,
-								I18n.of("cleared_monitored_channels_single", guildData).format(channelId)
+								I18n.of("cleared_excluded_channels_single", guildData).format(channelId)
 							)
 						} catch (_: Exception) {
 							EmbedBuilder().error(event.member, guildData, I18n.of("msg_error_format", guildData))

@@ -40,8 +40,8 @@ class LoginServiceImpl : LoginService {
 			"add_manager_role".cmd("/add_manager_role [role_id]", string()),
 			"clear_manager_roles".cmd("/clear_manager_roles {role_id}", string(false)),
 
-			"add_monitored_channel".cmd("/add_monitored_channel [channel_id]", string()),
-			"clear_monitored_channels".cmd("/clear_monitored_channels {channel_id}", string(false)),
+			"add_excluded_channel".cmd("/add_excluded_channel [channel_id]", string()),
+			"clear_excluded_channels".cmd("/clear_excluded_channels {channel_id}", string(false)),
 
 			"commit".cmd("/commit", empty()),
 			"uncommit".cmd("/uncommit", string(false)),
