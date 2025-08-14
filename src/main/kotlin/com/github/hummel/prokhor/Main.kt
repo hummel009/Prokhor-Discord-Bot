@@ -8,7 +8,7 @@ import java.io.FileReader
 import java.io.FileWriter
 
 data class Config(
-	val token: String, val ownerId: String, val reinit: Boolean?
+	val token: String, val ownerId: String, val reinit: Boolean
 )
 
 fun main() {
@@ -51,12 +51,11 @@ fun requestUserInput() {
 	launchWithData(config, "files")
 }
 
-@Suppress("UNUSED_PARAMETER")
 fun launchWithData(config: Config, root: String) {
 	BotData.token = config.token
 	BotData.ownerId = config.ownerId
 	BotData.root = root
 
 	val loginService = ServiceFactory.loginService
-	loginService.loginBot(config.reinit ?: false)
+	loginService.loginBot(config.reinit)
 }

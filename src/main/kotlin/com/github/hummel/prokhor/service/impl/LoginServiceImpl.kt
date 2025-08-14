@@ -26,7 +26,6 @@ class LoginServiceImpl : LoginService {
 		}
 	}
 
-	@Suppress("unused")
 	private fun recreateCommands() {
 		fun String.cmd(description: String, options: List<OptionData>) =
 			Commands.slash(this, description).addOptions(options)
