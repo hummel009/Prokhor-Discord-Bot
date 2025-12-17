@@ -1,5 +1,6 @@
 package com.github.hummel.prokhor.service.impl
 
+import com.github.hummel.prokhor.bean.Message
 import com.github.hummel.prokhor.factory.ServiceFactory
 import com.github.hummel.prokhor.service.BotService
 import com.github.hummel.prokhor.service.DataService
@@ -12,6 +13,7 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent
+import kotlin.collections.set
 import kotlin.random.Random
 
 class BotServiceImpl : BotService {
@@ -27,14 +29,21 @@ class BotServiceImpl : BotService {
 			return
 		}
 
-		val message = event.message.contentRaw
-
 		val guildBank = dataService.loadGuildBank(guild)
 
-		val innerMap = guildBank.channelsToBanks.getOrPut(channelId) { linkedMapOf() }
-		innerMap[event.message.idLong] = message.encode()
-		if (innerMap.size > 1000) {
-			innerMap.remove(innerMap.keys.first())
+		val messageId = event.message.idLong
+		val messageAuthorId = event.message.author.idLong
+		var messageContent = event.message.contentStripped
+
+		if (messageContent.isEmpty()) {
+			messageContent = "N/A"
+		}
+
+		val channelBank = guildBank.channelsToBanks.getOrPut(channelId) { linkedMapOf() }
+		channelBank[messageId] = Message(messageAuthorId, messageContent.encode())
+
+		if (channelBank.size > 1000) {
+			channelBank.remove(channelBank.keys.first())
 		}
 
 		dataService.saveGuildBank(guild, guildBank)
@@ -42,9 +51,12 @@ class BotServiceImpl : BotService {
 
 	override fun reportMessageEdited(event: MessageUpdateEvent) {
 		try {
-			val guildData = dataService.loadGuildData(event.guild)
+			val guild = event.guild
+			val guildData = dataService.loadGuildData(guild)
 
-			if (guildData.excludedChannelIds.any { it == event.channel.idLong }) {
+			val channelId = event.channel.idLong
+
+			if (guildData.excludedChannelIds.any { it == channelId }) {
 				return
 			}
 
@@ -54,27 +66,31 @@ class BotServiceImpl : BotService {
 				guildData.logChannelId
 			) ?: throw Exception()
 
-			val message = event.message.contentRaw
+			val guildBank = dataService.loadGuildBank(event.guild)
 
 			val messageId = event.message.idLong
+			val messageAuthorId = event.message.author.idLong
+			var messageContent = event.message.contentStripped
 
-			val guildBank = dataService.loadGuildBank(event.guild)
-			val channelArchived = guildBank.channelsToBanks[event.channel.idLong] ?: return
-			val messageArchived = channelArchived[messageId]?.decode() ?: return
+			if (messageContent.isEmpty()) {
+				messageContent = "N/A"
+			}
 
-			if (message == messageArchived || message.trim() == messageArchived.trim()) {
+			val channelBank = guildBank.channelsToBanks[channelId] ?: return
+			val (cachedAuthorId, encodedContent) = channelBank[messageId] ?: return
+			val cachedContent = encodedContent.decode()
+
+			if (messageContent.trim() == cachedContent.trim()) {
 				return
 			}
 
-			if (message.isEmpty() || messageArchived.isEmpty()) {
-				return
-			}
+			channelBank[messageId] = Message(messageAuthorId, messageContent.encode())
 
-			(guildBank.channelsToBanks[event.channel.idLong] ?: return)[messageId] = message.encode()
-
+			val user = event.jda.getUserById(cachedAuthorId)
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
+				setAuthor(user?.effectiveName, null, user?.effectiveAvatarUrl)
 				setTitle(I18n.of("title_msg_edited", guildData))
-				setDescription("${qep(messageArchived)}\r\n\r\n${qep(message)}")
+				setDescription("${wrap(cachedContent)}${wrap(messageContent)}")
 				setColor(0xFFFF00)
 			}.build()).queue()
 
@@ -85,9 +101,12 @@ class BotServiceImpl : BotService {
 
 	override fun reportMessageDeleted(event: MessageDeleteEvent) {
 		try {
-			val guildData = dataService.loadGuildData(event.guild)
+			val guild = event.guild
+			val guildData = dataService.loadGuildData(guild)
 
-			if (guildData.excludedChannelIds.any { it == event.channel.idLong }) {
+			val channelId = event.channel.idLong
+
+			if (guildData.excludedChannelIds.any { it == channelId }) {
 				return
 			}
 
@@ -97,15 +116,25 @@ class BotServiceImpl : BotService {
 				guildData.logChannelId
 			) ?: throw Exception()
 
+			val guildBank = dataService.loadGuildBank(event.guild)
+
 			val messageId = event.messageIdLong
 
-			val guildBank = dataService.loadGuildBank(event.guild)
-			val channelArchived = guildBank.channelsToBanks[event.channel.idLong] ?: return
-			val messageArchived = channelArchived[messageId]?.decode() ?: return
+			val channelBank = guildBank.channelsToBanks[channelId] ?: return
+			val (cachedAuthorId, encodedContent) = channelBank[messageId] ?: return
+			val cachedContent = encodedContent.decode()
 
+			if (cachedContent.trim().isEmpty()) {
+				return
+			}
+
+			channelBank.remove(messageId)
+
+			val user = event.jda.getUserById(cachedAuthorId)
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
+				setAuthor(user?.effectiveName, null, user?.effectiveAvatarUrl)
 				setTitle(I18n.of("title_msg_deleted", guildData))
-				setDescription("> $messageArchived")
+				setDescription(wrap(cachedContent))
 				setColor(0xFF0000)
 			}.build()).queue()
 		} catch (_: Exception) {
@@ -114,7 +143,8 @@ class BotServiceImpl : BotService {
 
 	override fun reportUserJoined(event: GuildMemberJoinEvent) {
 		try {
-			val guildData = dataService.loadGuildData(event.guild)
+			val guild = event.guild
+			val guildData = dataService.loadGuildData(guild)
 
 			val logsChannel = event.guild.getTextChannelById(
 				guildData.logChannelId
@@ -123,7 +153,6 @@ class BotServiceImpl : BotService {
 			) ?: throw Exception()
 
 			val user = event.user
-
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
 				setAuthor(user.effectiveName, null, user.effectiveAvatarUrl)
 				setTitle(I18n.of("title_user_joined", guildData))
@@ -136,7 +165,8 @@ class BotServiceImpl : BotService {
 
 	override fun reportUserLeft(event: GuildMemberRemoveEvent) {
 		try {
-			val guildData = dataService.loadGuildData(event.guild)
+			val guild = event.guild
+			val guildData = dataService.loadGuildData(guild)
 
 			val logsChannel = event.guild.getTextChannelById(
 				guildData.logChannelId
@@ -145,7 +175,6 @@ class BotServiceImpl : BotService {
 			) ?: throw Exception()
 
 			val user = event.user
-
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
 				setAuthor(user.effectiveName, null, user.effectiveAvatarUrl)
 				setTitle(I18n.of("title_user_left", guildData))
@@ -156,5 +185,6 @@ class BotServiceImpl : BotService {
 		}
 	}
 
-	private fun qep(text: String): String = text.lines().joinToString("\n") { "> $it" }
+	private fun wrap(text: String): String =
+		"```" + text.replace("`", "") + "```"
 }
