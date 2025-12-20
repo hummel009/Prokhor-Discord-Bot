@@ -42,9 +42,6 @@ class LoginServiceImpl : LoginService {
 			"add_excluded_channel".cmd("/add_excluded_channel [channel_id]", string()),
 			"clear_excluded_channels".cmd("/clear_excluded_channels {channel_id}", string(false)),
 
-			"commit".cmd("/commit", empty()),
-			"uncommit".cmd("/uncommit", string(false)),
-
 			"wipe_data".cmd("/wipe_data", empty()),
 			"wipe_bank".cmd("/wipe_bank", empty()),
 
