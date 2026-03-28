@@ -9,7 +9,7 @@
 [![Lines of Code][lines_of_code_badge]][lines_of_code_link]
 
 My discord bot for my discord servers.
-This bot logs different discord events (related to messages and users) and posts info into selected discord channel.
+This bot collects info about different discord events (related to messages and users) and posts logs into selected discord channel.
 Other features:
 
 * Four languages of interface: english, russian, belarusian and ukrainian.
