@@ -8,7 +8,7 @@
 [![Technical Debt][technical_debt_badge]][technical_debt_link]
 [![Lines of Code][lines_of_code_badge]][lines_of_code_link]
 
-My discord bot for my discord servers; his name is Prokhor.
+My discord bot for my discord servers.
 This bot logs different discord events (related to messages and users) and posts them into selected discord channel.
 Other features:
 
