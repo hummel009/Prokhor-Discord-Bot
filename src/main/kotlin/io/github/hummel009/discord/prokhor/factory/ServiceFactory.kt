@@ -1,7 +1,7 @@
 package io.github.hummel009.discord.prokhor.factory
 
-import com.github.hummel.prokhor.service.*
-import com.github.hummel.prokhor.service.impl.*
+import io.github.hummel009.discord.prokhor.service.*
+import io.github.hummel009.discord.prokhor.service.impl.*
 
 @Suppress("unused", "RedundantSuppression")
 object ServiceFactory {

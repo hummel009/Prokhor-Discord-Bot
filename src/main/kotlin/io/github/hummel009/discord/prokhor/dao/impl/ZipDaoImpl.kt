@@ -1,8 +1,8 @@
 package io.github.hummel009.discord.prokhor.dao.impl
 
-import com.github.hummel.prokhor.dao.FileDao
-import com.github.hummel.prokhor.dao.ZipDao
-import com.github.hummel.prokhor.factory.DaoFactory
+import io.github.hummel009.discord.prokhor.dao.FileDao
+import io.github.hummel009.discord.prokhor.dao.ZipDao
+import io.github.hummel009.discord.prokhor.factory.DaoFactory
 import net.lingala.zip4j.ZipFile
 
 class ZipDaoImpl : ZipDao {

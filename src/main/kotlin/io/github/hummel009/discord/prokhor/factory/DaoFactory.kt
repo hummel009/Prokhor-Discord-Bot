@@ -1,11 +1,11 @@
 package io.github.hummel009.discord.prokhor.factory
 
-import com.github.hummel.prokhor.dao.FileDao
-import com.github.hummel.prokhor.dao.JsonDao
-import com.github.hummel.prokhor.dao.ZipDao
-import com.github.hummel.prokhor.dao.impl.FileDaoImpl
-import com.github.hummel.prokhor.dao.impl.JsonDaoImpl
-import com.github.hummel.prokhor.dao.impl.ZipDaoImpl
+import io.github.hummel009.discord.prokhor.dao.FileDao
+import io.github.hummel009.discord.prokhor.dao.JsonDao
+import io.github.hummel009.discord.prokhor.dao.ZipDao
+import io.github.hummel009.discord.prokhor.dao.impl.FileDaoImpl
+import io.github.hummel009.discord.prokhor.dao.impl.JsonDaoImpl
+import io.github.hummel009.discord.prokhor.dao.impl.ZipDaoImpl
 
 @Suppress("unused", "RedundantSuppression")
 object DaoFactory {

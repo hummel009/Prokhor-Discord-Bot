@@ -1,10 +1,10 @@
 package io.github.hummel009.discord.prokhor.handler
 
-import com.github.hummel.prokhor.factory.ServiceFactory
-import com.github.hummel.prokhor.service.BotService
-import com.github.hummel.prokhor.service.ManagerService
-import com.github.hummel.prokhor.service.MemberService
-import com.github.hummel.prokhor.service.OwnerService
+import io.github.hummel009.discord.prokhor.factory.ServiceFactory
+import io.github.hummel009.discord.prokhor.service.BotService
+import io.github.hummel009.discord.prokhor.service.ManagerService
+import io.github.hummel009.discord.prokhor.service.MemberService
+import io.github.hummel009.discord.prokhor.service.OwnerService
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent

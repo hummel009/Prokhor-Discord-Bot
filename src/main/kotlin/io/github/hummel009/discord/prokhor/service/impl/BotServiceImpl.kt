@@ -1,12 +1,12 @@
 package io.github.hummel009.discord.prokhor.service.impl
 
-import com.github.hummel.prokhor.bean.Message
-import com.github.hummel.prokhor.factory.ServiceFactory
-import com.github.hummel.prokhor.service.BotService
-import com.github.hummel.prokhor.service.DataService
-import com.github.hummel.prokhor.utils.I18n
-import com.github.hummel.prokhor.utils.decode
-import com.github.hummel.prokhor.utils.encode
+import io.github.hummel009.discord.prokhor.bean.Message
+import io.github.hummel009.discord.prokhor.factory.ServiceFactory
+import io.github.hummel009.discord.prokhor.service.BotService
+import io.github.hummel009.discord.prokhor.service.DataService
+import io.github.hummel009.discord.prokhor.utils.I18n
+import io.github.hummel009.discord.prokhor.utils.decode
+import io.github.hummel009.discord.prokhor.utils.encode
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent

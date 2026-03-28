@@ -1,10 +1,10 @@
 package io.github.hummel009.discord.prokhor.service.impl
 
-import com.github.hummel.prokhor.factory.ServiceFactory
-import com.github.hummel.prokhor.service.DataService
-import com.github.hummel.prokhor.service.MemberService
-import com.github.hummel.prokhor.utils.I18n
-import com.github.hummel.prokhor.utils.success
+import io.github.hummel009.discord.prokhor.factory.ServiceFactory
+import io.github.hummel009.discord.prokhor.service.DataService
+import io.github.hummel009.discord.prokhor.service.MemberService
+import io.github.hummel009.discord.prokhor.utils.I18n
+import io.github.hummel009.discord.prokhor.utils.success
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 

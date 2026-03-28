@@ -1,9 +1,9 @@
 package io.github.hummel009.discord.prokhor.service.impl
 
-import com.github.hummel.prokhor.ApiHolder
-import com.github.hummel.prokhor.bean.BotData
-import com.github.hummel.prokhor.handler.EventHandler
-import com.github.hummel.prokhor.service.LoginService
+import io.github.hummel009.discord.prokhor.ApiHolder
+import io.github.hummel009.discord.prokhor.bean.BotData
+import io.github.hummel009.discord.prokhor.handler.EventHandler
+import io.github.hummel009.discord.prokhor.service.LoginService
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.Commands

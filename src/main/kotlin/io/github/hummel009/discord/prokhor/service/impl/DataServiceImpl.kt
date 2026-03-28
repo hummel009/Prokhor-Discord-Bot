@@ -1,12 +1,12 @@
 package io.github.hummel009.discord.prokhor.service.impl
 
-import com.github.hummel.prokhor.bean.GuildBank
-import com.github.hummel.prokhor.bean.GuildData
-import com.github.hummel.prokhor.dao.FileDao
-import com.github.hummel.prokhor.dao.JsonDao
-import com.github.hummel.prokhor.dao.ZipDao
-import com.github.hummel.prokhor.factory.DaoFactory
-import com.github.hummel.prokhor.service.DataService
+import io.github.hummel009.discord.prokhor.bean.GuildBank
+import io.github.hummel009.discord.prokhor.bean.GuildData
+import io.github.hummel009.discord.prokhor.dao.FileDao
+import io.github.hummel009.discord.prokhor.dao.JsonDao
+import io.github.hummel009.discord.prokhor.dao.ZipDao
+import io.github.hummel009.discord.prokhor.factory.DaoFactory
+import io.github.hummel009.discord.prokhor.service.DataService
 import net.dv8tion.jda.api.entities.Guild
 
 class DataServiceImpl : DataService {

@@ -1,6 +1,6 @@
 package io.github.hummel009.discord.prokhor.utils
 
-import com.github.hummel.prokhor.bean.GuildData
+import io.github.hummel009.discord.prokhor.bean.GuildData
 import java.io.InputStreamReader
 
 object I18n {

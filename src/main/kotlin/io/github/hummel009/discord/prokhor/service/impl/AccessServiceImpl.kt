@@ -1,8 +1,8 @@
 package io.github.hummel009.discord.prokhor.service.impl
 
-import com.github.hummel.prokhor.bean.BotData
-import com.github.hummel.prokhor.bean.GuildData
-import com.github.hummel.prokhor.service.AccessService
+import io.github.hummel009.discord.prokhor.bean.BotData
+import io.github.hummel009.discord.prokhor.bean.GuildData
+import io.github.hummel009.discord.prokhor.service.AccessService
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 
