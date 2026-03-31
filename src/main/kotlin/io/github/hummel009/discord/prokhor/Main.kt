@@ -16,15 +16,15 @@ fun main() {
 		val file = File("input/config.json")
 		if (file.exists()) {
 			FileReader(file).use {
-				val config = _root_ide_package_.io.github.hummel009.discord.prokhor.utils.gson.fromJson(it, _root_ide_package_.io.github.hummel009.discord.prokhor.Config::class.java)
+				val config = gson.fromJson(it, Config::class.java)
 
-				_root_ide_package_.io.github.hummel009.discord.prokhor.launchWithData(config, "output")
+				launchWithData(config, "output")
 			}
 		} else {
-			_root_ide_package_.io.github.hummel009.discord.prokhor.requestUserInput()
+			requestUserInput()
 		}
 	} catch (_: Exception) {
-		_root_ide_package_.io.github.hummel009.discord.prokhor.requestUserInput()
+		requestUserInput()
 	}
 }
 
@@ -38,24 +38,24 @@ fun requestUserInput() {
 	print("Reinit? Type true/false: ")
 	val reinit = readln()
 
-	val config = _root_ide_package_.io.github.hummel009.discord.prokhor.Config(token, ownerId, reinit.toBoolean())
+	val config = Config(token, ownerId, reinit.toBoolean())
 	try {
 		val file = File("input/config.json")
 		FileWriter(file).use {
-			_root_ide_package_.io.github.hummel009.discord.prokhor.utils.gson.toJson(config, it)
+			gson.toJson(config, it)
 		}
 	} catch (e: Exception) {
 		e.printStackTrace()
 	}
 
-	_root_ide_package_.io.github.hummel009.discord.prokhor.launchWithData(config, "output")
+	launchWithData(config, "output")
 }
 
-fun launchWithData(config: io.github.hummel009.discord.prokhor.Config, root: String) {
-	_root_ide_package_.io.github.hummel009.discord.prokhor.bean.BotData.token = config.token
-	_root_ide_package_.io.github.hummel009.discord.prokhor.bean.BotData.ownerId = config.ownerId
-	_root_ide_package_.io.github.hummel009.discord.prokhor.bean.BotData.root = root
+fun launchWithData(config: Config, root: String) {
+	BotData.token = config.token
+	BotData.ownerId = config.ownerId
+	BotData.root = root
 
-	val loginService = _root_ide_package_.io.github.hummel009.discord.prokhor.factory.ServiceFactory.loginService
+	val loginService = ServiceFactory.loginService
 	loginService.loginBot(config.reinit)
 }

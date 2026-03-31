@@ -5,8 +5,8 @@ import io.github.hummel009.discord.prokhor.dao.JsonDao
 import io.github.hummel009.discord.prokhor.factory.DaoFactory
 import io.github.hummel009.discord.prokhor.utils.gson
 
-class JsonDaoImpl : io.github.hummel009.discord.prokhor.dao.JsonDao {
-	private val fileDao: io.github.hummel009.discord.prokhor.dao.FileDao = _root_ide_package_.io.github.hummel009.discord.prokhor.factory.DaoFactory.fileDao
+class JsonDaoImpl : JsonDao {
+	private val fileDao: FileDao = DaoFactory.fileDao
 
 	override fun <T> readFromFile(filePath: String, clazz: Class<T>): T? {
 		val file = fileDao.getFile(filePath)
