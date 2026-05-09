@@ -5,8 +5,8 @@ import io.github.hummel009.discord.prokhor.factory.ServiceFactory
 import io.github.hummel009.discord.prokhor.service.BotService
 import io.github.hummel009.discord.prokhor.service.DataService
 import io.github.hummel009.discord.prokhor.utils.I18n
-import io.github.hummel009.discord.prokhor.utils.decode
-import io.github.hummel009.discord.prokhor.utils.encode
+import io.github.hummel009.discord.prokhor.utils.decrypt
+import io.github.hummel009.discord.prokhor.utils.encrypt
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent
@@ -40,7 +40,7 @@ class BotServiceImpl : BotService {
 		}
 
 		val channelBank = guildBank.channelsToBanks.getOrPut(channelId) { linkedMapOf() }
-		channelBank[messageId] = Message(messageAuthorId, messageContent.encode())
+		channelBank[messageId] = Message(messageAuthorId, messageContent.encrypt())
 
 		if (channelBank.size > 1000) {
 			channelBank.remove(channelBank.keys.first())
@@ -78,13 +78,13 @@ class BotServiceImpl : BotService {
 
 			val channelBank = guildBank.channelsToBanks[channelId] ?: return
 			val (cachedAuthorId, encodedContent) = channelBank[messageId] ?: return
-			val cachedContent = encodedContent.decode()
+			val cachedContent = encodedContent.decrypt()
 
 			if (messageContent.trim() == cachedContent.trim()) {
 				return
 			}
 
-			channelBank[messageId] = Message(messageAuthorId, messageContent.encode())
+			channelBank[messageId] = Message(messageAuthorId, messageContent.encrypt())
 
 			val user = event.jda.getUserById(cachedAuthorId)
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
@@ -122,7 +122,7 @@ class BotServiceImpl : BotService {
 
 			val channelBank = guildBank.channelsToBanks[channelId] ?: return
 			val (cachedAuthorId, encodedContent) = channelBank[messageId] ?: return
-			val cachedContent = encodedContent.decode()
+			val cachedContent = encodedContent.decrypt()
 
 			if (cachedContent.trim().isEmpty()) {
 				return

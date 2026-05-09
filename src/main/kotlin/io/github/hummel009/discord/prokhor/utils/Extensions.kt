@@ -33,12 +33,12 @@ fun EmbedBuilder.error(member: Member?, guildData: GuildData, desc: String): Mes
 	setColor(0xFF0000)
 }.build()
 
-fun String.encode(): String {
+fun String.encrypt(): String {
 	val bytes = toByteArray(Charsets.UTF_8)
 	return Base64.getEncoder().encodeToString(bytes).reversed()
 }
 
-fun String.decode(): String {
+fun String.decrypt(): String {
 	val bytes = Base64.getDecoder().decode(reversed())
 	return bytes.toString(Charsets.UTF_8)
 }
