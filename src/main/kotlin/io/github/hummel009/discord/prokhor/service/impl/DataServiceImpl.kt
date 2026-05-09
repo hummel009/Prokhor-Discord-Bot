@@ -94,7 +94,7 @@ class DataServiceImpl : DataService {
 
 	private fun initAndGetGuildData(guild: Guild): GuildData = GuildData(
 		guildName = guild.name,
-		lang = "ru",
+		lang = "en",
 		logChannelId = 0,
 		managerRoleIds = mutableSetOf(),
 		excludedChannelIds = mutableSetOf(),
