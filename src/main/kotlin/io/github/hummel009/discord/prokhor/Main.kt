@@ -12,7 +12,7 @@ data class Config(
 fun main() {
 	ensureConfigExists()
 
-	ApiHolder.establishConnections()
+	ApiHolder.establishDiscordConnection()
 }
 
 fun ensureConfigExists() {

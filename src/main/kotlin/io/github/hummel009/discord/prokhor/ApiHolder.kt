@@ -19,7 +19,7 @@ object ApiHolder {
 		}.build().awaitReady()
 	}
 
-	fun establishConnections() {
+	fun establishDiscordConnection() {
 		discord
 
 		val startService = ServiceFactory.startService
