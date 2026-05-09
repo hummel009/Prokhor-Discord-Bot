@@ -30,27 +30,27 @@ class MemberServiceImpl : MemberService {
 
 			val text = buildString {
 				val langName = I18n.of(guildData.lang, guildData)
-				append(I18n.of("info_language", guildData, langName), "\r\n")
-				append(I18n.of("info_log_channel", guildData, guildData.logChannelId), "\r\n")
+				append(I18n.of("info_language", guildData, langName), "\n")
+				append(I18n.of("info_log_channel", guildData, guildData.logChannelId), "\n")
 
 				if (guildData.managerRoleIds.isEmpty()) {
-					append("\r\n", I18n.of("no_manager_roles", guildData), "\r\n")
+					append("\n", I18n.of("no_manager_roles", guildData), "\n")
 				} else {
-					append("\r\n", I18n.of("has_manager_roles", guildData), "\r\n")
-					guildData.managerRoleIds.joinTo(this, "\r\n") {
+					append("\n", I18n.of("has_manager_roles", guildData), "\n")
+					guildData.managerRoleIds.joinTo(this, "\n") {
 						I18n.of("manager_role", guildData, it).s()
 					}
-					append("\r\n")
+					append("\n")
 				}
 
 				if (guildData.excludedChannelIds.isEmpty()) {
-					append("\r\n", I18n.of("no_excluded_channels", guildData), "\r\n")
+					append("\n", I18n.of("no_excluded_channels", guildData), "\n")
 				} else {
-					append("\r\n", I18n.of("has_excluded_channels", guildData), "\r\n")
-					guildData.excludedChannelIds.joinTo(this, "\r\n") {
+					append("\n", I18n.of("has_excluded_channels", guildData), "\n")
+					guildData.excludedChannelIds.joinTo(this, "\n") {
 						I18n.of("excluded_channel", guildData, it).s()
 					}
-					append("\r\n")
+					append("\n")
 				}
 			}
 			dataService.saveGuildData(guild, guildData)
