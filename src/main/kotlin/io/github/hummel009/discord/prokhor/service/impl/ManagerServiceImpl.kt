@@ -5,6 +5,7 @@ import io.github.hummel009.discord.prokhor.service.AccessService
 import io.github.hummel009.discord.prokhor.service.DataService
 import io.github.hummel009.discord.prokhor.service.ManagerService
 import io.github.hummel009.discord.prokhor.utils.I18n
+import io.github.hummel009.discord.prokhor.utils.Lang
 import io.github.hummel009.discord.prokhor.utils.access
 import io.github.hummel009.discord.prokhor.utils.error
 import io.github.hummel009.discord.prokhor.utils.success
@@ -31,15 +32,11 @@ class ManagerServiceImpl : ManagerService {
 
 				if (arguments.size == 1) {
 					try {
-						val lang = arguments[0]
-
-						if (lang !in listOf("ru", "be", "uk", "en")) {
-							throw Exception()
-						}
+						val lang = Lang.of(arguments[0]) ?: throw Exception()
 
 						guildData.lang = lang
 
-						val langName = I18n.of(lang, guildData)
+						val langName = I18n.of(lang.code, guildData)
 
 						EmbedBuilder().success(
 							event.member, I18n.of("set_language", guildData, langName)

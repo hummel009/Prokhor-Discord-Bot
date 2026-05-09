@@ -7,6 +7,7 @@ import io.github.hummel009.discord.prokhor.dao.JsonDao
 import io.github.hummel009.discord.prokhor.dao.ZipDao
 import io.github.hummel009.discord.prokhor.factory.DaoFactory
 import io.github.hummel009.discord.prokhor.service.DataService
+import io.github.hummel009.discord.prokhor.utils.Lang
 import net.dv8tion.jda.api.entities.Guild
 
 class DataServiceImpl : DataService {
@@ -94,7 +95,7 @@ class DataServiceImpl : DataService {
 
 	private fun initAndGetGuildData(guild: Guild): GuildData = GuildData(
 		guildName = guild.name,
-		lang = "en",
+		lang = Lang.ENGLISH,
 		logChannelId = 0,
 		managerRoleIds = mutableSetOf(),
 		excludedChannelIds = mutableSetOf(),

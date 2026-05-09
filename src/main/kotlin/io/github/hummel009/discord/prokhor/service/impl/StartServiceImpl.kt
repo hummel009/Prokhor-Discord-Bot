@@ -2,6 +2,7 @@ package io.github.hummel009.discord.prokhor.service.impl
 
 import io.github.hummel009.discord.prokhor.ApiHolder
 import io.github.hummel009.discord.prokhor.service.StartService
+import io.github.hummel009.discord.prokhor.utils.Lang
 import io.github.hummel009.discord.prokhor.utils.config
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.Commands
@@ -23,7 +24,7 @@ class StartServiceImpl : StartService {
 
 			withStringOption("add_excluded_channel", "[channel_id]"),
 			withStringOption("add_manager_role", "[role_id]"),
-			withStringOption("set_language", "[ru/be/uk/en]"),
+			withStringOption("set_language", "[${Lang.entries.joinToString("/")}]"),
 			withStringOption("set_log_channel", "[channel_id]"),
 
 			withStringOption("clear_excluded_channels", "{channel_id}", false),
