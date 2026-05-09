@@ -87,7 +87,7 @@ class BotServiceImpl : BotService {
 			val user = event.jda.getUserById(cachedAuthorId)
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
 				setAuthor(user?.effectiveName, null, user?.effectiveAvatarUrl)
-				setTitle(I18n.of("title_msg_edited", guildData))
+				setTitle(I18n.of("title_msg_edited", guildData).s())
 				setDescription("${cachedContent.wrap()}${messageContent.wrap()}")
 				setColor(0xFFFF00)
 			}.build()).queue()
@@ -131,7 +131,7 @@ class BotServiceImpl : BotService {
 			val user = event.jda.getUserById(cachedAuthorId)
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
 				setAuthor(user?.effectiveName, null, user?.effectiveAvatarUrl)
-				setTitle(I18n.of("title_msg_deleted", guildData))
+				setTitle(I18n.of("title_msg_deleted", guildData).s())
 				setDescription(cachedContent.wrap())
 				setColor(0xFF0000)
 			}.build()).queue()
@@ -153,8 +153,8 @@ class BotServiceImpl : BotService {
 			val user = event.user
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
 				setAuthor(user.effectiveName, null, user.effectiveAvatarUrl)
-				setTitle(I18n.of("title_user_joined", guildData))
-				setDescription(I18n.of("desc_user_joined_${Random.nextInt(4)}", guildData))
+				setTitle(I18n.of("title_user_joined", guildData).s())
+				setDescription(I18n.of("desc_user_joined_${Random.nextInt(4)}", guildData).s())
 				setColor(0x00FF00)
 			}.build()).queue()
 		} catch (_: Exception) {
@@ -175,8 +175,8 @@ class BotServiceImpl : BotService {
 			val user = event.user
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
 				setAuthor(user.effectiveName, null, user.effectiveAvatarUrl)
-				setTitle(I18n.of("title_user_left", guildData))
-				setDescription(I18n.of("desc_user_left_${Random.nextInt(4)}", guildData))
+				setTitle(I18n.of("title_user_left", guildData).s())
+				setDescription(I18n.of("desc_user_left_${Random.nextInt(4)}", guildData).s())
 				setColor(0xFF0000)
 			}.build()).queue()
 		} catch (_: Exception) {
