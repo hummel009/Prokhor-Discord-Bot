@@ -22,7 +22,7 @@ object ApiHolder {
 	fun establishConnections() {
 		discord
 
-		val loginService = ServiceFactory.startService
-		loginService.recreateCommands()
+		val startService = ServiceFactory.startService
+		startService.recreateCommands()
 	}
 }

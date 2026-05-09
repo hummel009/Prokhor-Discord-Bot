@@ -1,6 +1,5 @@
 package io.github.hummel009.discord.prokhor
 
-import io.github.hummel009.discord.prokhor.factory.ServiceFactory
 import io.github.hummel009.discord.prokhor.utils.gson
 import io.github.hummel009.discord.prokhor.utils.input
 import java.io.File
