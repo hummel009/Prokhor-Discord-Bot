@@ -15,33 +15,34 @@ class StartServiceImpl : StartService {
 		}
 
 		val commands = listOf(
-			withoutOptions("info", "/info"),
-			withoutOptions("wipe_data", "/wipe_data"),
-			withoutOptions("wipe_bank", "/wipe_bank"),
-			withoutOptions("export", "/export"),
-			withoutOptions("exit", "/exit"),
+			withoutOptions("exit"),
+			withoutOptions("export"),
+			withoutOptions("info"),
+			withoutOptions("wipe_bank"),
+			withoutOptions("wipe_data"),
 
-			withStringOption("set_language", "/set_language [ru/be/uk/en]"),
-			withStringOption("set_log_channel", "/set_log_channel [channel_id]"),
-			withStringOption("add_manager_role", "/add_manager_role [role_id]"),
-			withStringOption("clear_manager_roles", "/clear_manager_roles {role_id}", false),
-			withStringOption("add_excluded_channel", "/add_excluded_channel [channel_id]"),
-			withStringOption("clear_excluded_channels", "/clear_excluded_channels {channel_id}", false),
+			withStringOption("add_excluded_channel", "[channel_id]"),
+			withStringOption("add_manager_role", "[role_id]"),
+			withStringOption("set_language", "[ru/be/uk/en]"),
+			withStringOption("set_log_channel", "[channel_id]"),
 
-			withAttachmentOption("import", "/import")
+			withStringOption("clear_excluded_channels", "{channel_id}", false),
+			withStringOption("clear_manager_roles", "{role_id}", false),
+
+			withAttachmentOption("import")
 		)
 
 		ApiHolder.discord.updateCommands().addCommands(commands).complete()
 	}
 
-	private fun withoutOptions(name: String, description: String): SlashCommandData =
-		Commands.slash(name, description).addOptions(emptyList())
+	private fun withoutOptions(command: String): SlashCommandData =
+		Commands.slash(command, "/$command").addOptions(emptyList())
 
-	private fun withStringOption(name: String, description: String, obligatory: Boolean = true): SlashCommandData =
-		Commands.slash(name, description)
+	private fun withStringOption(command: String, parameters: String, obligatory: Boolean = true): SlashCommandData =
+		Commands.slash(command, "/$command $parameters")
 			.addOptions(OptionData(OptionType.STRING, "arguments", "The list of arguments", obligatory))
 
-	private fun withAttachmentOption(name: String, description: String, obligatory: Boolean = true): SlashCommandData =
-		Commands.slash(name, description)
-			.addOptions(OptionData(OptionType.ATTACHMENT, "arguments", "The list of arguments", obligatory))
+	private fun withAttachmentOption(command: String): SlashCommandData =
+		Commands.slash(command, "/$command")
+			.addOptions(OptionData(OptionType.ATTACHMENT, "arguments", "The list of arguments", true))
 }
