@@ -5,15 +5,13 @@ import io.github.hummel009.discord.prokhor.factory.ServiceFactory
 import io.github.hummel009.discord.prokhor.service.BotService
 import io.github.hummel009.discord.prokhor.service.DataService
 import io.github.hummel009.discord.prokhor.utils.I18n
-import io.github.hummel009.discord.prokhor.utils.decrypt
-import io.github.hummel009.discord.prokhor.utils.encrypt
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent
-import kotlin.collections.set
+import java.util.*
 import kotlin.random.Random
 
 class BotServiceImpl : BotService {
@@ -90,7 +88,7 @@ class BotServiceImpl : BotService {
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
 				setAuthor(user?.effectiveName, null, user?.effectiveAvatarUrl)
 				setTitle(I18n.of("title_msg_edited", guildData))
-				setDescription("${wrap(cachedContent)}${wrap(messageContent)}")
+				setDescription("${cachedContent.wrap()}${messageContent.wrap()}")
 				setColor(0xFFFF00)
 			}.build()).queue()
 
@@ -134,7 +132,7 @@ class BotServiceImpl : BotService {
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
 				setAuthor(user?.effectiveName, null, user?.effectiveAvatarUrl)
 				setTitle(I18n.of("title_msg_deleted", guildData))
-				setDescription(wrap(cachedContent))
+				setDescription(cachedContent.wrap())
 				setColor(0xFF0000)
 			}.build()).queue()
 		} catch (_: Exception) {
@@ -185,6 +183,16 @@ class BotServiceImpl : BotService {
 		}
 	}
 
-	private fun wrap(text: String): String =
-		"```" + text.replace("`", "") + "```"
+	private fun String.wrap(): String =
+		"```" + replace("`", "") + "```"
+
+	private fun String.encrypt(): String {
+		val bytes = toByteArray(Charsets.UTF_8)
+		return Base64.getEncoder().encodeToString(bytes).reversed()
+	}
+
+	private fun String.decrypt(): String {
+		val bytes = Base64.getDecoder().decode(reversed())
+		return bytes.toString(Charsets.UTF_8)
+	}
 }
