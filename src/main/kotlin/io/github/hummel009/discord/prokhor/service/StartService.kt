@@ -1,5 +1,5 @@
 package io.github.hummel009.discord.prokhor.service
 
-interface LoginService {
-	fun loginBot()
+interface StartService {
+	fun recreateCommands()
 }
