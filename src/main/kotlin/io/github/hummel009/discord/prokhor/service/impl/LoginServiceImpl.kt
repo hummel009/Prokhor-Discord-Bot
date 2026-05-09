@@ -1,9 +1,9 @@
 package io.github.hummel009.discord.prokhor.service.impl
 
 import io.github.hummel009.discord.prokhor.ApiHolder
-import io.github.hummel009.discord.prokhor.bean.BotData
 import io.github.hummel009.discord.prokhor.handler.EventHandler
 import io.github.hummel009.discord.prokhor.service.LoginService
+import io.github.hummel009.discord.prokhor.utils.config
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.Commands
@@ -13,15 +13,15 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy
 import net.dv8tion.jda.api.utils.cache.CacheFlag
 
 class LoginServiceImpl : LoginService {
-	override fun loginBot(reinit: Boolean) {
-		ApiHolder.discord = JDABuilder.createDefault(BotData.token).apply {
+	override fun loginBot() {
+		ApiHolder.discord = JDABuilder.createDefault(config.discordToken).apply {
 			enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))
 			enableCache(CacheFlag.entries)
 			setMemberCachePolicy(MemberCachePolicy.ALL)
 			addEventListeners(EventHandler)
 		}.build().awaitReady()
 
-		if (reinit) {
+		if (config.reinit) {
 			recreateCommands()
 		}
 	}

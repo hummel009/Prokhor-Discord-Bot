@@ -1,7 +1,7 @@
 package io.github.hummel009.discord.prokhor.dao.impl
 
-import io.github.hummel009.discord.prokhor.bean.BotData
 import io.github.hummel009.discord.prokhor.dao.FileDao
+import io.github.hummel009.discord.prokhor.utils.output
 import java.io.File
 
 class FileDaoImpl : FileDao {
@@ -37,9 +37,9 @@ class FileDaoImpl : FileDao {
 		}
 	}
 
-	override fun getFile(filePath: String): File = File(BotData.root, filePath)
+	override fun getFile(filePath: String): File = File(output, filePath)
 
-	override fun getFolder(folderPath: String): File = File(BotData.root, folderPath)
+	override fun getFolder(folderPath: String): File = File(output, folderPath)
 
 	override fun readFromFile(filePath: String): ByteArray {
 		val file = getFile(filePath)
