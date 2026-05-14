@@ -4,11 +4,7 @@ import io.github.hummel009.discord.prokhor.factory.ServiceFactory
 import io.github.hummel009.discord.prokhor.service.AccessService
 import io.github.hummel009.discord.prokhor.service.DataService
 import io.github.hummel009.discord.prokhor.service.ManagerService
-import io.github.hummel009.discord.prokhor.utils.I18n
-import io.github.hummel009.discord.prokhor.utils.Lang
-import io.github.hummel009.discord.prokhor.utils.access
-import io.github.hummel009.discord.prokhor.utils.error
-import io.github.hummel009.discord.prokhor.utils.success
+import io.github.hummel009.discord.prokhor.utils.*
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 
@@ -154,11 +150,7 @@ class ManagerServiceImpl : ManagerService {
 					try {
 						val channelId = arguments[0].toLong()
 
-						guild.getTextChannelById(
-							channelId
-						) ?: guild.getThreadChannelById(
-							channelId
-						) ?: throw Exception()
+						guild.getMessageChannelById(channelId) ?: throw Exception()
 
 						guildData.excludedChannelIds.add(channelId)
 
@@ -241,11 +233,7 @@ class ManagerServiceImpl : ManagerService {
 					try {
 						val channelId = arguments[0].toLong()
 
-						guild.getTextChannelById(
-							channelId
-						) ?: guild.getThreadChannelById(
-							channelId
-						) ?: throw Exception()
+						guild.getMessageChannelById(channelId) ?: throw Exception()
 
 						guildData.logChannelId = channelId
 

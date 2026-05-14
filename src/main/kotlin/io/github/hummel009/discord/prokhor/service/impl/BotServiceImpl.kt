@@ -5,6 +5,7 @@ import io.github.hummel009.discord.prokhor.factory.ServiceFactory
 import io.github.hummel009.discord.prokhor.service.BotService
 import io.github.hummel009.discord.prokhor.service.DataService
 import io.github.hummel009.discord.prokhor.utils.I18n
+import io.github.hummel009.discord.prokhor.utils.getMessageChannelById
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent
@@ -58,11 +59,7 @@ class BotServiceImpl : BotService {
 				return
 			}
 
-			val logsChannel = event.guild.getTextChannelById(
-				guildData.logChannelId
-			) ?: event.guild.getThreadChannelById(
-				guildData.logChannelId
-			) ?: throw Exception()
+			val logsChannel = event.guild.getMessageChannelById(guildData.logChannelId) ?: throw Exception()
 
 			val guildBank = dataService.loadGuildBank(event.guild)
 
@@ -108,11 +105,7 @@ class BotServiceImpl : BotService {
 				return
 			}
 
-			val logsChannel = event.guild.getTextChannelById(
-				guildData.logChannelId
-			) ?: event.guild.getThreadChannelById(
-				guildData.logChannelId
-			) ?: throw Exception()
+			val logsChannel = event.guild.getMessageChannelById(guildData.logChannelId) ?: throw Exception()
 
 			val guildBank = dataService.loadGuildBank(event.guild)
 
@@ -144,11 +137,7 @@ class BotServiceImpl : BotService {
 			val guild = event.guild
 			val guildData = dataService.loadGuildData(guild)
 
-			val logsChannel = event.guild.getTextChannelById(
-				guildData.logChannelId
-			) ?: event.guild.getThreadChannelById(
-				guildData.logChannelId
-			) ?: throw Exception()
+			val logsChannel = event.guild.getMessageChannelById(guildData.logChannelId) ?: throw Exception()
 
 			val user = event.user
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
@@ -166,11 +155,7 @@ class BotServiceImpl : BotService {
 			val guild = event.guild
 			val guildData = dataService.loadGuildData(guild)
 
-			val logsChannel = event.guild.getTextChannelById(
-				guildData.logChannelId
-			) ?: event.guild.getThreadChannelById(
-				guildData.logChannelId
-			) ?: throw Exception()
+			val logsChannel = event.guild.getMessageChannelById(guildData.logChannelId) ?: throw Exception()
 
 			val user = event.user
 			logsChannel.sendMessageEmbeds(EmbedBuilder().apply {
