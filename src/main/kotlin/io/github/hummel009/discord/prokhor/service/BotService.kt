@@ -8,8 +8,10 @@ import net.dv8tion.jda.api.events.message.MessageUpdateEvent
 
 interface BotService {
 	fun saveMessage(event: MessageReceivedEvent)
+
 	fun reportMessageEdited(event: MessageUpdateEvent)
 	fun reportMessageDeleted(event: MessageDeleteEvent)
+
 	fun reportUserJoined(event: GuildMemberJoinEvent)
 	fun reportUserLeft(event: GuildMemberRemoveEvent)
 }
