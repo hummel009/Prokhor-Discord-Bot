@@ -73,7 +73,7 @@ class ManagerServiceImpl : ManagerService {
 
 				try {
 					val roleId = arguments[0].toLong().also {
-						require(guild.getRoleById(it) != null)
+						requireNotNull(guild.getRoleById(it))
 					}
 
 					guildData.managerRoleIds.add(roleId)
@@ -118,7 +118,7 @@ class ManagerServiceImpl : ManagerService {
 
 				try {
 					val roleId = arguments[0].toLong().also {
-						require(guild.getRoleById(it) != null)
+						requireNotNull(guild.getRoleById(it))
 					}
 
 					require(guildData.managerRoleIds.removeIf { it == roleId })
@@ -158,7 +158,7 @@ class ManagerServiceImpl : ManagerService {
 
 				try {
 					val channelId = arguments[0].toLong().also {
-						require(guild.getMessageChannelById(it) != null)
+						requireNotNull(guild.getMessageChannelById(it))
 					}
 
 					guildData.excludedChannelIds.add(channelId)
@@ -203,7 +203,7 @@ class ManagerServiceImpl : ManagerService {
 
 				try {
 					val channelId = arguments[0].toLong().also {
-						require(guild.getMessageChannelById(it) != null)
+						requireNotNull(guild.getMessageChannelById(it))
 					}
 
 					require(guildData.excludedChannelIds.removeIf { it == channelId })
@@ -243,7 +243,7 @@ class ManagerServiceImpl : ManagerService {
 
 				try {
 					val channelId = arguments[0].toLong().also {
-						require(guild.getMessageChannelById(it) != null)
+						requireNotNull(guild.getMessageChannelById(it))
 					}
 
 					guildData.logChannelId = channelId
