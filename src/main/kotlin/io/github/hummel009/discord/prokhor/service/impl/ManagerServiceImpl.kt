@@ -277,11 +277,11 @@ class ManagerServiceImpl : ManagerService {
 				return@queue
 			}
 
-			val embed = run(fun(): MessageEmbed {
+			val embed = run {
 				dataService.wipeGuildData(guild)
 
-				return EmbedBuilder().success(event.member, I18n.of("wipe_data", guildData))
-			})
+				EmbedBuilder().success(event.member, I18n.of("wipe_data", guildData))
+			}
 
 			event.hook.sendMessageEmbeds(embed).queue()
 		}
@@ -300,11 +300,11 @@ class ManagerServiceImpl : ManagerService {
 				return@queue
 			}
 
-			val embed = run(fun(): MessageEmbed {
+			val embed = run {
 				dataService.wipeGuildBank(guild)
 
-				return EmbedBuilder().success(event.member, I18n.of("wipe_bank", guildData))
-			})
+				EmbedBuilder().success(event.member, I18n.of("wipe_bank", guildData))
+			}
 
 			event.hook.sendMessageEmbeds(embed).queue()
 		}
